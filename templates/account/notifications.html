@@ -1,0 +1,35 @@
+{% extends '../base.html' %}
+
+{% block title %}{{ _("Notifications") }} | {% end %}
+
+{% block content %}
+<div class="box" id="notification_list">
+    <header>
+        {{ _("Notifications") }}
+            <div class="pull-right">
+                {{ _("Total %s") % notis_count }}
+                <a href="/account/notifications/clear" class="label label-important">{{ _("Clear") }}</a>
+            </div>
+    </header>
+    {% for noti in notis %}
+    <div class="list">
+        {% set member = handler.get_member(noti['from']) %}
+        {% raw handler.get_avatar(member) %}
+        <p>
+            <a href="/member/{{ member['name'] }}">{{ member['name'] }}</a>
+            {{ _("in") }}
+            {% set topic = handler.get_topic(noti['topic']) %}
+            <a href="/topic/{{ topic['_id'] }}">{{ topic['title'] }}</a>
+            {{ _("mentioned you") }}
+            {% if not noti['read'] %}
+            <span class="label label-success">{{ _("unread") }}</span>
+            {% set tmp = handler.db.notifications.update({'_id':noti['_id']},{'$set':{'read':True}}) %}
+            {% end %}
+            <a href="/account/notifications/{{ noti['_id'] }}/remove?next={{ url_escape(request.uri) }}" class="label label-important">{{ _("Remove") }}</a>
+        </p>
+        <div class="well">{% raw noti['content'] %}</div>
+    </div>
+    {% end %}
+    {% module paginator(p=p,perpage=handler.settings['notifications_per_page'],count=notis_count,base_url="/account/notifications") %}
+</div>
+{% end %}

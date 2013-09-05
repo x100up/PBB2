@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ member['name'] }} | {% end %}
+{% block canonical %}member/{{ member['name'] }}{% end %}
+
+{% block content %}
+<div class="box">
+    <div id="profile_main">
+        {% raw handler.get_avatar(member, size=72) %}
+        {% if member['role'] == -1 %}
+        <span class="label label-important pull-right">{{ _("Deactived") }}</span>
+        {% elif member['role'] > 1 %}
+        <span class="label label-important pull-right">{{ _(handler.settings['role'][member['role']]) }}</span>
+        {% end %}
+        <p class="username">{{ member['name'] }}</p>
+        <p>{{ _("Join at") }} {% raw handler.format_time(member['created']) %}</p>
+        {% if member['website'] %}
+        <p><a href="{{ member['website'] }}" rel="nofollow">{{ member['website'] }}</a></p>
+        {% end %}
+    </div>
+    {% if member['description'] %}
+    <footer>
+        <p>{% raw escape(member['description']).replace('\n','<br />') %}</p>
+    </footer>
+    {% end %}
+</div>
+
+{% if topics.count() %}
+<div class="box">
+    <header>{{ _("Topics") }}</header>
+    {% module topic_list(topics) %}
+    <a href="/member/{{ member['name'] }}/topics">{{ _("More") }} >></a>
+</div>
+{% end %}
+
+{% if liked_topics %}
+<div class="box">
+    <header>{{ _("Like") }}</header>
+    {% module topic_list(liked_topics) %}
+</div>
+{% end %}
+
+{% if replies.count() %}
+<div class="box">
+    <header>{{ _("Replies") }}</header>
+    <table class="table table-striped">
+        <tbody>
+        {% for reply in replies %}
+        <tr>
+            <td>
+                <a href="/topic/{{ reply['topic'] }}">{% raw reply['content_html'] %}</a>
+            </td>
+        </tr>
+        {% end %}
+        </tbody>
+    </table>
+</div>
+{% end %}
+
+{% end %}
+
+{% block sidebar %}
+{% if current_user and current_user['role'] > member['role'] %}
+<div class="box">
+    <header>{{ _("Member") }}</header>
+    {% if handler.check_role(return_bool=True) %}
+    <footer>
+        <form method="post" action="/member/{{ member['name'] }}/role">
+            <select name="role" id="role">
+                {% if member['role'] > -1 %}
+                <option value="-1">{{ _("Deactive") }}</option>
+                {% end %}
+                {% for role in range(1,current_user['role']) %}
+                {% if role != member['role'] and role < current_user['role'] and role in handler.settings['role'] %}
+                <option value="{{ role }}">{{ _(handler.settings['role'][role]) }}</option>
+                {% end %}
+                {% end %}
+            </select>
+            {% raw xsrf_form_html() %}
+            <button type="submit" class="btn btn-primary">{{ _("Change Role") }}</button>
+        </form>
+    </footer>
+    {% end %}
+</div>
+{% end %}
+{% end %}

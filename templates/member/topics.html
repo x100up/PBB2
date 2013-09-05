@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block description %}{{ member['name'] }},topics{% end %}
+{% block title %}{{ _("Topics") }} | {{ member['name'] }} | {% end %}
+{% block canonical %}member/{{ member['name'] }}/topics?p={{p}}{% end %}
+
+{% block content %}
+<div class="box">
+    <header>{{ _("Topics") }}</header>
+    {% module topic_list(topics) %}
+    {% module paginator(p=p,perpage=handler.settings['topics_per_page'],count=topics_count,base_url="/member/%s/topics" % member['name']) %}
+</div>
+{% end %}

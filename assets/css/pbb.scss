@@ -1,0 +1,174 @@
+@import "bootstrap";
+@import "responsive";
+@import "pygments_style";
+@import "variables";
+@import "mixin";
+@import "jquery.atwho";
+@import "ghdiff";
+
+body{
+  background-color: #EEE;
+}
+
+#main .container{
+  padding-top: 60px;
+}
+
+.box {
+  background-color: white;
+  @include border-radius(3px);
+  margin-bottom: $spacing;
+  @include box-shadow(0 0 0 1px #DDD);
+  overflow: hidden;
+  padding: 14px;
+  border-bottom: 2px solid #e2e2e9;
+  word-break:break-all;
+
+  header {
+    margin-bottom: $spacing;
+    padding-bottom: $spacing;
+    border-bottom: 1px solid #DDD;
+    font-weight: bold;
+    font-size: 20px;
+  }
+
+  footer{
+    margin-top: $spacing;
+    padding-top: $spacing;
+    border-top: 1px solid #DDD;
+  }
+  
+  img{
+    max-width: 100%;
+  }
+  
+}
+
+.node{
+  display: inline-block;
+  @include text_like;
+  line-height: 20px;
+  color: #fff;
+  font-weight: bold;
+  padding: 1px 4px;
+  background-color: #BFBFBF;
+  @include border-radius(3px);
+  font-size: 15px;
+
+  &:hover{
+    color: #fff;
+  }
+
+}
+
+#topic_node {
+  width: 150px;
+}
+
+#content{
+  margin-top: $spacing;
+  width: 98%;
+}
+
+.username{
+  font-weight: bold;
+  font-size: 15px;
+  @include text_like;
+}
+
+.avatar{
+  float: left;
+  margin-left: $avatar_margin_left;
+  margin-right: $avatar_margin_right;
+  
+  img{
+    @include border-radius(5px);
+    width: $avatar;
+    height: $avatar;
+  }
+
+  #members-list &{
+    margin-bottom: $avatar_margin_left;
+  }
+  
+}
+
+.reply-content, #notification_list .well, .list-content, #current_base p, .author_box p{
+  margin-left: $avatar + $avatar_margin_left + $avatar_margin_left + 3px;
+}
+
+.list{
+  margin-bottom: $spacing;
+  padding-bottom: $spacing;
+  border-bottom: 1px solid #DDD;
+}
+
+#profile_main{
+  height: $avatar_large;
+  font-size: 15px;
+
+  .avatar img{
+    width: $avatar_large;
+    height: $avatar_large;
+  }
+
+  .username{
+    font-size: 20px;
+  }
+
+}
+
+#current_base{
+  min-height: $avatar
+}
+
+table{
+  width: 100%
+}
+
+#current_sidebar{
+  @include text_like;
+}
+
+#current_info{
+  margin-top: $spacing;
+  text-align: center;
+
+  td {
+    width: 33%
+  }
+
+  .liked{
+    width: 34%;
+    border-left: 1px solid rgba(100, 100, 100, 0.4);
+    border-right: 1px solid rgba(100, 100, 100, 0.4);
+  }
+
+  p{
+    margin-top: 3px;
+  }
+
+  span{
+    font-size: 16px;
+  }
+
+}
+
+#notification_list .right{
+  margin-top: 8px;
+  font-weight: normal;
+  font-size: 17px;
+}
+
+#followed_list .avatar img{
+  width: $avatar_small;
+  height: $avatar_small
+}
+
+#footer{
+  border-top: 1px solid #DDD;
+  margin-top: $spacing;
+  padding-top: $spacing;
+  padding-bottom: $spacing;
+  text-align: center;
+}

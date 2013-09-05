@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ _("Recent Topics") }} | {% end %}
+{% block canonical %}topic?p={{p}}{% end %}
+
+{% block content %}
+<div class="box">
+    <header>{{ _("Topics") }}</header>
+    {% set topics_per_page = handler.settings['topics_per_page'] %}
+    {% module topic_list(topics[(p-1)*topics_per_page:p*topics_per_page]) %}
+    {% module paginator(p=p,perpage=topics_per_page,count=topics_count,base_url="/topic") %}
+</div>
+{% end %}

@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ _("Edit Node") }} | {% end %}
+
+{% block content %}
+<div class="box">
+    <header>{{ _("Edit Node") }}</header>
+    <form class="form-horizontal" method="post">
+        <fieldset>
+            {% raw xsrf_form_html() %}
+            <div class="control-group">
+                <label class="control-label" for="name">{{ _("Node Name") }}</label>
+                <div class="controls">
+                    <input class="input-xlarge disabled" name="name" type="text" value="{{ node['name'] }}">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="title">{{ _("Node Title") }}</label>
+                <div class="controls">
+                    <input class="input-xlarge disabled" name="title" type="text" value="{{ node['title'] }}">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="description">{{ _("Description") }}</label>
+                <div class="controls">
+                    <textarea class="input-xlarge" id="description" name="description">{{ node['description'] }}</textarea>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="html">{{ _("Custom Html") }}</label>
+                <div class="controls">
+                    <textarea class="input-xlarge" id="html" name="html">{{ node['html'] }}</textarea>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">{{ _("Save") }}</button>
+            </div>
+        </fieldset>
+    </form>
+</div>
+{% end %}
